@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Map;
 
 @RestController
-@CrossOrigin(origins = "https://ironvalleyagro.netlify.app/")
+@CrossOrigin(origins = "*")
 public class PaymentController {
 
     private final RazorpayClient razorpayClient;
