@@ -3,6 +3,7 @@ package in.ironvalleyagro.Agronomy.Controller;
 import com.razorpay.Utils;
 import netscape.javascript.JSObject;
 import org.json.JSONObject;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Map;
 
 @RestController
+@CrossOrigin(origins = "https://ironvalleyagro.netlify.app/")
 public class PaymentVerificationController {
 
     @PostMapping("/verify-payment")
