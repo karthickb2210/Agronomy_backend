@@ -21,7 +21,7 @@ public class RegisterService {
             private SequenceGeneratorService generatorService;
 
     boolean flag;
-    public boolean newUser(User user){
+    public User newUser(User user){
         long newId = generatorService.generateSequence(AuthUser.SEQUENCE_NAME);
         user.setPassword(user.getPassword());
         user.setId(newId);
@@ -30,8 +30,8 @@ public class RegisterService {
         authUser.setUsername(user.getMail());
         authUser.setPassword(user.getPassword());
         authUser.setActive(true);
-        authUserRepository.save(authUser);
-        userRepository.save(user);
-        return flag;
+         authUserRepository.save(authUser);
+        User newUser = userRepository.save(user);
+        return newUser;
     }
 }

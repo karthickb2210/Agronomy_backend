@@ -18,7 +18,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/test","/testMessage","/sendMail","/create-order","/verify-payment","/register","/checkUser").permitAll() // Allow access to /public without authentication
+                        .requestMatchers("/","/test","/testMessage","/sendMail","/create-order","/verify-payment","/register","/checkUser").permitAll() // Allow access to /public without authentication
                         .anyRequest().authenticated() // All endpoints require authentication
                 )
                 .httpBasic() // Enable HTTP Basic Authentication
