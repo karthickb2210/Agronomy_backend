@@ -1,7 +1,8 @@
 package in.ironvalleyagro.Agronomy.Controller;
 
+import com.razorpay.RazorpayClient;
 import com.razorpay.Utils;
-import netscape.javascript.JSObject;
+import in.ironvalleyagro.Agronomy.Model.RazorPay;
 import org.json.JSONObject;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,22 +16,23 @@ import java.util.Map;
 public class PaymentVerificationController {
 
     @PostMapping("/verify-payment")
-    public String verifyPayment(@RequestBody Map<String, String> data) throws Exception {
+    public boolean verifyPayment(@RequestBody RazorPay razorPay) throws Exception {
+
+
+        RazorpayClient razorpayClient = new RazorpayClient("rzp_test_wbXDO68U56KR2k", "xNHTSwpWL6pLzNHVujb0iBX6");
+
 
         String secret = "xNHTSwpWL6pLzNHVujb0iBX6";
-        JSONObject jsObject = new JSONObject();
-        jsObject.append("razorpay_order_id",data.get("razorpay_order_id"));
-        jsObject.append("razorpay_payment_id",data.get("razorpay_payment_id"));
-        jsObject.append("razorpay_signature",data.get("razorpay_signature"));
-        boolean isSignatureValid = Utils.verifyPaymentSignature(jsObject, secret);
 
-        if (isSignatureValid) {
-            // Success
-            return "Payment is successful and verified";
-        } else {
-            // Failure
-            return "Payment signature verification failed";
-        }
+
+        JSONObject options = new JSONObject();
+        options.put("razorpay_order_id", razorPay.getRazor_pay_order_id());
+        options.put("razorpay_payment_id", razorPay.getRazorpay_payment_id());
+        options.put("razorpay_signature", razorPay.getRazorpay_signature());
+
+
+        boolean status =  Utils.verifyPaymentSignature(options, secret);
+        return status;
     }
 }
 
