@@ -11,6 +11,8 @@ import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
@@ -49,9 +51,12 @@ public class SubscriptionService {
         subscription.setEmail(user.getUsername());
         subscription.setSubscriptionDetails(subscriptionDto.getSubscriptionDetails());
         subscription.setSubscriptionId(newId);
+        subscription.setSubscriptionType(subscriptionDto.getSubscriptionType());
+        subscription.setBoxSize(subscriptionDto.getBoxSize());
         subscription.setOrderId(subscriptionDto.getOrderId());
         subscription.setSignature(subscriptionDto.getSignature());
         subscription.setPaymentId(subscriptionDto.getPaymentId());
+        subscription.setCreatedAt(LocalDateTime.now());
         return subscription;
     }
 }

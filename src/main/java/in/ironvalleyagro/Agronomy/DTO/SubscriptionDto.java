@@ -9,4 +9,6 @@ public class SubscriptionDto {
     private String orderId;
     private String signature;
     private String paymentId;
+    private String subscriptionType;
+    private int boxSize;
 }

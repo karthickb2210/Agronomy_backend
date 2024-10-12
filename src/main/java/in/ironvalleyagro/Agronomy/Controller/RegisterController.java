@@ -16,15 +16,6 @@ public class RegisterController {
 
     @PostMapping("/register")
     public Response newUser(@RequestBody User user){
-        Response res = new Response();
-        try{
-            User newUser = registerService.newUser(user);
-            res.setData(newUser);
-            res.setFlag(newUser.getId()!=0);
-            System.out.println(newUser.toString());
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        return res;
+        return registerService.newUser(user);
     }
 }

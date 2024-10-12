@@ -19,4 +19,8 @@ public class User {
     private String mail;
     private String mobileNumber;
     private String password;
+
+    public User() {
+
+    }
 }

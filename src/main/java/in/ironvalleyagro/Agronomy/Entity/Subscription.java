@@ -10,9 +10,9 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
+
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data
@@ -30,9 +30,11 @@ public class Subscription {
     @Indexed
     private long userid;
     private Object subscriptionDetails;
+    private String subscriptionType;
+    private int boxSize;
     private String orderId;
     private String signature;
     private String paymentId;
     @CreatedDate
-    private Date createdAt;
+    private LocalDateTime createdAt;
 }

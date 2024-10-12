@@ -1,7 +1,9 @@
 package in.ironvalleyagro.Agronomy.Services;
 
+import in.ironvalleyagro.Agronomy.Constant.ResponseCode;
 import in.ironvalleyagro.Agronomy.Entity.User;
 import in.ironvalleyagro.Agronomy.Model.AuthUser;
+import in.ironvalleyagro.Agronomy.Model.Response;
 import in.ironvalleyagro.Agronomy.Repository.AuthUserRepository;
 import in.ironvalleyagro.Agronomy.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,10 +20,19 @@ public class RegisterService {
     private AuthUserRepository authUserRepository;
 
     @Autowired
-            private SequenceGeneratorService generatorService;
+    private SequenceGeneratorService generatorService;
 
     boolean flag;
-    public User newUser(User user){
+    public Response newUser(User user){
+        Response res = new Response();
+        if(userRepository.existsByMail(user.getMail())){
+            res.setStatusCode(ResponseCode.DUPLICATE_MAIL_ENTRY);
+            return res;
+        }
+        if(userRepository.existsByMobileNumber(user.getMobileNumber())){
+            res.setStatusCode(ResponseCode.DUPLICATE_NUMBER_ENTRY);
+            return res;
+        }
         long newId = generatorService.generateSequence(AuthUser.SEQUENCE_NAME);
         user.setPassword(user.getPassword());
         user.setId(newId);
@@ -30,8 +41,9 @@ public class RegisterService {
         authUser.setUsername(user.getMail());
         authUser.setPassword(user.getPassword());
         authUser.setActive(true);
-         authUserRepository.save(authUser);
+        authUserRepository.save(authUser);
         User newUser = userRepository.save(user);
-        return newUser;
+        res.setData(newUser);
+        return res;
     }
 }
