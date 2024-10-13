@@ -6,4 +6,5 @@ import lombok.Data;
 public class DashBoardData {
     private Object profileDetails;
     private Object subscriptionDetails;
+    private Object orderDetails;
 }

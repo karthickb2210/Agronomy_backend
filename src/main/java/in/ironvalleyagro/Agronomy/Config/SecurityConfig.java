@@ -18,8 +18,9 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/","/addSubscription","/getStocks","/updateStocks","/test","/testMessage","/sendMail","/create-order",
-                                "/verify-payment","/register","/checkUser","/getDashDetails/{email}"
+                        .requestMatchers("/","/addSubscription","/admin/getStocks","/updateStocks","/test","/testMessage","/sendMail","/create-order",
+                                "/verify-payment","/register","/checkUser","/getDashDetails/{email}","/addOrder","/admin/updateStocks",
+                                "/admin/getAllSubscriptions","/admin/getAllOrders"
                                         ).permitAll() // Allow access to /public without authentication
                         .anyRequest().authenticated() // All endpoints require authentication
                 )

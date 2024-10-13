@@ -1,5 +1,6 @@
 package in.ironvalleyagro.Agronomy.Services;
 
+import in.ironvalleyagro.Agronomy.Constant.ResponseCode;
 import in.ironvalleyagro.Agronomy.DTO.SubscriptionDto;
 import in.ironvalleyagro.Agronomy.Entity.Subscription;
 import in.ironvalleyagro.Agronomy.Model.AuthUser;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Date;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -26,6 +28,19 @@ public class SubscriptionService {
 
     @Autowired
     private AuthUserRepository authUserRepository;
+
+    public Response getAllSubscriptions(){
+        Response res = new Response();
+        try{
+            res.setStatusCode(ResponseCode.CODE_SUCCESS);
+            List<Subscription> subscriptionList = subscriptionRepository.findAll();
+            res.setFlag(true);
+            res.setData(subscriptionList);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return res;
+    }
 
     public Response addSubscription(SubscriptionDto subscriptionDto){
         Response res = new Response();

@@ -30,7 +30,6 @@ public class PaymentVerificationController {
         options.put("razorpay_payment_id", razorPay.getRazorpay_payment_id());
         options.put("razorpay_signature", razorPay.getRazorpay_signature());
 
-
         boolean status =  Utils.verifyPaymentSignature(options, secret);
         return status;
     }

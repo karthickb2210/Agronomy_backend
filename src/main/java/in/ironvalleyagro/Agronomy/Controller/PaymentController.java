@@ -23,6 +23,7 @@ public class PaymentController {
     @PostMapping("/create-order")
     public String createOrder(@RequestBody Map<String, Object> data) throws Exception {
         // Capture the amount from the request (in paise)
+
         int amount = (int) data.get("amount");
 
         // Create order in Razorpay

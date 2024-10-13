@@ -1,10 +1,12 @@
 package in.ironvalleyagro.Agronomy.Services;
 
 import in.ironvalleyagro.Agronomy.Constant.ResponseCode;
+import in.ironvalleyagro.Agronomy.Entity.Order;
 import in.ironvalleyagro.Agronomy.Entity.Subscription;
 import in.ironvalleyagro.Agronomy.Entity.User;
 import in.ironvalleyagro.Agronomy.Model.DashBoardData;
 import in.ironvalleyagro.Agronomy.Model.Response;
+import in.ironvalleyagro.Agronomy.Repository.OrderRepository;
 import in.ironvalleyagro.Agronomy.Repository.SubscriptionRepository;
 import in.ironvalleyagro.Agronomy.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,9 @@ import java.util.List;
 
 @Service
 public class DashBoardDetails {
+
+    @Autowired
+    private OrderRepository orderRepository;
 
     @Autowired
     private UserRepository userRepository;
@@ -33,8 +38,9 @@ public class DashBoardDetails {
             dashBoardData.setProfileDetails(user);
             List<Subscription> subscriptionList = subscriptionRepository.findAllByEmail(email);
             dashBoardData.setSubscriptionDetails(subscriptionList);
+            List<Order> orders = orderRepository.findAllByUserid(user.getId());
+            dashBoardData.setOrderDetails(orders);
             res.setData(dashBoardData);
-
         }catch (Exception e){
             e.printStackTrace();
         }
