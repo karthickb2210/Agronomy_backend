@@ -20,7 +20,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/","/addSubscription","/admin/getStocks","/updateStocks","/test","/testMessage","/sendMail","/create-order",
                                 "/verify-payment","/register","/checkUser","/getDashDetails/{email}","/addOrder","/admin/updateStocks",
-                                "/admin/getAllSubscriptions","/admin/getAllOrders"
+                                "/admin/getAllSubscriptions","/admin/getAllOrders","/existsByMail/{email}"
                                         ).permitAll() // Allow access to /public without authentication
                         .anyRequest().authenticated() // All endpoints require authentication
                 )

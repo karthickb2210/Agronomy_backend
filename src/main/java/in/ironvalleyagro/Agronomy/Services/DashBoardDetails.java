@@ -41,6 +41,7 @@ public class DashBoardDetails {
             List<Order> orders = orderRepository.findAllByUserid(user.getId());
             dashBoardData.setOrderDetails(orders);
             res.setData(dashBoardData);
+            System.out.println(res);
         }catch (Exception e){
             e.printStackTrace();
         }

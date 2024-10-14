@@ -50,7 +50,6 @@ public class OrderService {
             Order newOrder = orderRepository.save(order);
             res.setStatusCode(ResponseCode.CODE_SUCCESS);
             res.setData(newOrder);
-
         }catch (Exception e){
             e.printStackTrace();
         }
