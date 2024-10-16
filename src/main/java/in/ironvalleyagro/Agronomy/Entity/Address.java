@@ -14,23 +14,25 @@ import java.time.LocalDateTime;
 
 @Data
 @Builder
-@Document("Orders")
+@Document("Address")
 @AllArgsConstructor
 @NoArgsConstructor
-public class Order {
+public class Address {
     @Transient
-    public static final String SEQUENCE_NAME = "OrderId";
+    public static final String SEQUENCE_NAME = "AddressId";
+
     @Id
-    private long orderId;
-    private String email;
+    private long addressId;
     @Indexed
-    private long userid;
-    private Object orderDetails;
-    private String paymentId;
-    private Object address;
-    private String porterTrackerId;
-    private boolean isDelivered;
-    private String amountPaid;
+    private long userId;
+    private String name;
+    private String mobileNumber;
+    private String house;
+    private String street;
+    private String address;
+    private String city;
+    private String state;
+    private String zip;
     @CreatedDate
     private LocalDateTime createdAt;
 

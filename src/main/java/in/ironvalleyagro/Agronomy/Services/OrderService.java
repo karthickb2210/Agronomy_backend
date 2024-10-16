@@ -43,9 +43,11 @@ public class OrderService {
             order.setEmail(orderDto.getEmail());
             order.setOrderId(newId);
             order.setUserid(user.getId());
+            order.setAddress(orderDto.getAddressDetails());
             order.setOrderDetails(orderDto.getOrderDetails());
             order.setPaymentId(orderDto.getPaymentId());
             order.setCreatedAt(LocalDateTime.now());
+            order.setPorterTrackerId(null);
             order.setAmountPaid(orderDto.getAmountPaid());
             Order newOrder = orderRepository.save(order);
             res.setStatusCode(ResponseCode.CODE_SUCCESS);

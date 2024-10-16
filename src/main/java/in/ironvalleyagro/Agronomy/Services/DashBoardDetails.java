@@ -1,11 +1,13 @@
 package in.ironvalleyagro.Agronomy.Services;
 
 import in.ironvalleyagro.Agronomy.Constant.ResponseCode;
+import in.ironvalleyagro.Agronomy.Entity.Address;
 import in.ironvalleyagro.Agronomy.Entity.Order;
 import in.ironvalleyagro.Agronomy.Entity.Subscription;
 import in.ironvalleyagro.Agronomy.Entity.User;
 import in.ironvalleyagro.Agronomy.Model.DashBoardData;
 import in.ironvalleyagro.Agronomy.Model.Response;
+import in.ironvalleyagro.Agronomy.Repository.AddressRepository;
 import in.ironvalleyagro.Agronomy.Repository.OrderRepository;
 import in.ironvalleyagro.Agronomy.Repository.SubscriptionRepository;
 import in.ironvalleyagro.Agronomy.Repository.UserRepository;
@@ -26,6 +28,9 @@ public class DashBoardDetails {
     @Autowired
     private SubscriptionRepository subscriptionRepository;
 
+    @Autowired
+    private AddressRepository addressRepository;
+
     public Response getDashBoardDetails(String email){
         Response res = new Response();
         try {
@@ -40,6 +45,8 @@ public class DashBoardDetails {
             dashBoardData.setSubscriptionDetails(subscriptionList);
             List<Order> orders = orderRepository.findAllByUserid(user.getId());
             dashBoardData.setOrderDetails(orders);
+            List<Address> addresses = addressRepository.findAllByUserId(user.getId());
+            dashBoardData.setAddressDetails(addresses);
             res.setData(dashBoardData);
             System.out.println(res);
         }catch (Exception e){

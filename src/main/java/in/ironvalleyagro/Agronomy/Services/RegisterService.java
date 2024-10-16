@@ -7,7 +7,6 @@ import in.ironvalleyagro.Agronomy.Model.Response;
 import in.ironvalleyagro.Agronomy.Repository.AuthUserRepository;
 import in.ironvalleyagro.Agronomy.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -25,12 +24,8 @@ public class RegisterService {
     boolean flag;
     public Response newUser(User user){
         Response res = new Response();
-        if(userRepository.existsByMail(user.getMail())){
+        if(userRepository.existsByMail(user.getMail())) {
             res.setStatusCode(ResponseCode.DUPLICATE_MAIL_ENTRY);
-            return res;
-        }
-        if(userRepository.existsByMobileNumber(user.getMobileNumber())){
-            res.setStatusCode(ResponseCode.DUPLICATE_NUMBER_ENTRY);
             return res;
         }
         long newId = generatorService.generateSequence(AuthUser.SEQUENCE_NAME);

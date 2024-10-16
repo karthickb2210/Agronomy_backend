@@ -4,12 +4,9 @@ import com.razorpay.RazorpayClient;
 import com.razorpay.Utils;
 import in.ironvalleyagro.Agronomy.Model.RazorPay;
 import org.json.JSONObject;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.Map;
 
 @RestController
 
