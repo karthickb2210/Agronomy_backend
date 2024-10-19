@@ -1,5 +1,6 @@
 package in.ironvalleyagro.Agronomy.Services;
 
+import com.mongodb.client.result.UpdateResult;
 import in.ironvalleyagro.Agronomy.Constant.ResponseCode;
 import in.ironvalleyagro.Agronomy.DTO.OrderDto;
 import in.ironvalleyagro.Agronomy.DTO.SubscriptionDto;
@@ -10,8 +11,11 @@ import in.ironvalleyagro.Agronomy.Model.Response;
 import in.ironvalleyagro.Agronomy.Repository.OrderRepository;
 import in.ironvalleyagro.Agronomy.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
-
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import java.time.LocalDateTime;
 
 @Service
@@ -25,6 +29,30 @@ public class OrderService {
 
     @Autowired
     private OrderRepository orderRepository;
+
+    @Autowired
+    private MongoTemplate mongoTemplate;
+
+    public Response updatePorterId(long id,String porterId){
+        Response res=  new Response();
+        try{
+            if(!orderRepository.existsById(id)){
+                res.setStatusCode(ResponseCode.DATA_NOT_FOUND);
+                return res;
+            }
+            Query query = new Query(Criteria.where("_id").is(id));
+            Update update = new Update().set("porterTrackerId", porterId);
+            UpdateResult updateResult = mongoTemplate.updateFirst(query, update, Order.class);
+            if(updateResult.getModifiedCount()==1){
+                res.setFlag(true);
+            }
+            res.setStatusCode(ResponseCode.CODE_SUCCESS);
+            res.setData(updateResult);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return res;
+    }
 
     public Response getAllOrders(){
         Response res = new Response();
@@ -47,7 +75,7 @@ public class OrderService {
             order.setOrderDetails(orderDto.getOrderDetails());
             order.setPaymentId(orderDto.getPaymentId());
             order.setCreatedAt(LocalDateTime.now());
-            order.setPorterTrackerId(null);
+            order.setPorterTrackerId("0");
             order.setAmountPaid(orderDto.getAmountPaid());
             Order newOrder = orderRepository.save(order);
             res.setStatusCode(ResponseCode.CODE_SUCCESS);

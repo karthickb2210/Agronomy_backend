@@ -32,8 +32,7 @@ public class Subscription {
     private Object subscriptionDetails;
     private String subscriptionType;
     private int boxSize;
-    private String orderId;
-    private String signature;
+    private Object address;
     private String paymentId;
     @CreatedDate
     private LocalDateTime createdAt;

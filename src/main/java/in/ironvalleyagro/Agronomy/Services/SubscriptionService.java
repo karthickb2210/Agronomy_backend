@@ -68,8 +68,7 @@ public class SubscriptionService {
         subscription.setSubscriptionId(newId);
         subscription.setSubscriptionType(subscriptionDto.getSubscriptionType());
         subscription.setBoxSize(subscriptionDto.getBoxSize());
-        subscription.setOrderId(subscriptionDto.getOrderId());
-        subscription.setSignature(subscriptionDto.getSignature());
+        subscription.setAddress(subscriptionDto.getAddress());
         subscription.setPaymentId(subscriptionDto.getPaymentId());
         subscription.setCreatedAt(LocalDateTime.now());
         return subscription;

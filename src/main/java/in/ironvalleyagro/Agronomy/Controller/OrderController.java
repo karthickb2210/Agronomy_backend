@@ -4,10 +4,7 @@ import in.ironvalleyagro.Agronomy.DTO.OrderDto;
 import in.ironvalleyagro.Agronomy.Model.Response;
 import in.ironvalleyagro.Agronomy.Services.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class OrderController {
@@ -23,5 +20,10 @@ public class OrderController {
     @PostMapping("/addOrder")
     public Response addOrder(@RequestBody OrderDto orderDto){
         return orderService.addOrder(orderDto);
+    }
+
+    @GetMapping("/updatePorterId/{id}/{porterId}")
+    public Response updatePorterId(@PathVariable long id,@PathVariable  String porterId){
+    return orderService.updatePorterId(id,porterId);
     }
 }

@@ -33,6 +33,7 @@ public class PaymentController {
         orderRequest.put("receipt", "order_rcptid_11");
 
         Order order = razorpayClient.Orders.create(orderRequest);
+        System.out.println(order.toString());
 
         // Return order details as JSON
         return order.toString();

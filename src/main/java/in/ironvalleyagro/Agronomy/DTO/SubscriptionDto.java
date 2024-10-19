@@ -6,9 +6,8 @@ import lombok.Data;
 public class SubscriptionDto {
     private String mail;
     private Object subscriptionDetails;
-    private String orderId;
-    private String signature;
     private String paymentId;
+    private Object address;
     private String subscriptionType;
     private int boxSize;
 }
