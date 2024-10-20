@@ -63,6 +63,7 @@ public class OrderService {
     public Response addOrder(OrderDto orderDto){
         Response res = new Response();
         try{
+            System.out.println(orderDto.toString());
             long newId = generatorService.generateSequence(Order.SEQUENCE_NAME);
             User user = userRepository.findByMail(orderDto.getEmail());
             Order order = new Order();

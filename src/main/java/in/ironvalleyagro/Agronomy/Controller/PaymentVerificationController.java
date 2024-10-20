@@ -19,7 +19,7 @@ public class PaymentVerificationController {
         RazorpayClient razorpayClient = new RazorpayClient("rzp_test_wbXDO68U56KR2k", "xNHTSwpWL6pLzNHVujb0iBX6");
 
 
-        String secret = "WK4szpsjvFbz8lPgVzCe0a7d";
+        String secret = "xNHTSwpWL6pLzNHVujb0iBX6";
 
 
         JSONObject options = new JSONObject();
