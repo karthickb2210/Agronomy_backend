@@ -26,4 +26,10 @@ public class OrderController {
     public Response updatePorterId(@PathVariable long id,@PathVariable  String porterId){
     return orderService.updatePorterId(id,porterId);
     }
+
+    @GetMapping("/updateOrderStatus/{id}/{status}")
+    public Response updateOrderStatus(@PathVariable long id,@PathVariable int status){
+        return orderService.updateOrderStatus(id,status);
+    }
+
 }

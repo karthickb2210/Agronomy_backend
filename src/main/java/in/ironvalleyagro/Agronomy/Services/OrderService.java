@@ -3,9 +3,7 @@ package in.ironvalleyagro.Agronomy.Services;
 import com.mongodb.client.result.UpdateResult;
 import in.ironvalleyagro.Agronomy.Constant.ResponseCode;
 import in.ironvalleyagro.Agronomy.DTO.OrderDto;
-import in.ironvalleyagro.Agronomy.DTO.SubscriptionDto;
 import in.ironvalleyagro.Agronomy.Entity.Order;
-import in.ironvalleyagro.Agronomy.Entity.Subscription;
 import in.ironvalleyagro.Agronomy.Entity.User;
 import in.ironvalleyagro.Agronomy.Model.Response;
 import in.ironvalleyagro.Agronomy.Repository.OrderRepository;
@@ -80,6 +78,28 @@ public class OrderService {
             Order newOrder = orderRepository.save(order);
             res.setStatusCode(ResponseCode.CODE_SUCCESS);
             res.setData(newOrder);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return res;
+    }
+
+    public Response updateOrderStatus(long id,int status){
+        Response res = new Response();
+        try{
+            if(!orderRepository.existsById(id)){
+                res.setStatusCode(ResponseCode.DATA_NOT_FOUND);
+                return res;
+            }
+            boolean temp = status == 1;
+            Query query = new Query(Criteria.where("_id").is(id));
+            Update update = new Update().set("isDelivered", temp);
+            UpdateResult updateResult = mongoTemplate.updateFirst(query, update, Order.class);
+            if(updateResult.getModifiedCount()==1){
+                res.setFlag(true);
+            }
+            res.setStatusCode(ResponseCode.CODE_SUCCESS);
+            res.setData(updateResult);
         }catch (Exception e){
             e.printStackTrace();
         }

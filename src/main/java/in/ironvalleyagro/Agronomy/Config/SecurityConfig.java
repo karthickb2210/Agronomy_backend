@@ -22,7 +22,7 @@ public class SecurityConfig {
                                 "/verify-payment","/register","/checkUser","/getDashDetails/{email}","/addOrder","/admin/updateStocks",
                                 "/admin/getAllSubscriptions","/admin/getAllOrders","/existsByMail/{email}",
                                 "/addAddress","/getAllAddress/{email}"
-                                ,"/updatePorterId/{id}/{porterId}"
+                                ,"/updatePorterId/{id}/{porterId}","/updateOrderStatus/{id}/{status}"
                                         ).permitAll() // Allow access to /public without authentication
                         .anyRequest().authenticated() // All endpoints require authentication
                 )
