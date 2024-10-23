@@ -30,7 +30,7 @@ public class AddressServices {
         Response res = new Response();
         try {
             User user =userRepository.findByMail(email);
-            List<Address> addressList = addressRepository.findAllByUserId(user.getId());
+            List<Address> addressList = addressRepository.findAllByEmail(email);
             res.setStatusCode(ResponseCode.CODE_SUCCESS);
             res.setData(addressList);
         }catch (Exception e){
@@ -49,6 +49,7 @@ public class AddressServices {
             address.setAddressId(newId);
             address.setUserId(user.getId());
             address.setName(addressDto.getName());
+            address.setEmail(addressDto.getEmail());
             address.setCity(addressDto.getCity());
             address.setState(addressDto.getState());
             address.setHouse(addressDto.getHouse());

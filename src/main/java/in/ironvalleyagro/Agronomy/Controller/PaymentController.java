@@ -17,7 +17,7 @@ public class PaymentController {
     private final RazorpayClient razorpayClient;
 
     public PaymentController() throws Exception {
-        this.razorpayClient = new RazorpayClient("rzp_test_wbXDO68U56KR2k", "xNHTSwpWL6pLzNHVujb0iBX6");
+        this.razorpayClient = new RazorpayClient("rzp_test_VIg1NaXkrCS4Lx", "WK4szpsjvFbz8lPgVzCe0a7d");
     }
 
     @PostMapping("/create-order")

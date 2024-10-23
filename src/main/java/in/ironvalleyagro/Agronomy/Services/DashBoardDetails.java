@@ -43,9 +43,9 @@ public class DashBoardDetails {
             dashBoardData.setProfileDetails(user);
             List<Subscription> subscriptionList = subscriptionRepository.findAllByEmail(email);
             dashBoardData.setSubscriptionDetails(subscriptionList);
-            List<Order> orders = orderRepository.findAllByUserid(user.getId());
+            List<Order> orders = orderRepository.findAllByEmail(email);
             dashBoardData.setOrderDetails(orders);
-            List<Address> addresses = addressRepository.findAllByUserId(user.getId());
+            List<Address> addresses = addressRepository.findAllByEmail(email);
             dashBoardData.setAddressDetails(addresses);
             res.setData(dashBoardData);
             System.out.println(res);

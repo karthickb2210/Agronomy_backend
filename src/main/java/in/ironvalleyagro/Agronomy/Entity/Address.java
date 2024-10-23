@@ -23,9 +23,10 @@ public class Address {
 
     @Id
     private long addressId;
-    @Indexed
     private long userId;
     private String name;
+    @Indexed
+    private String email;
     private String mobileNumber;
     private String house;
     private String street;

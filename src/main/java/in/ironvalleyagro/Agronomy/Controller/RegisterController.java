@@ -27,7 +27,7 @@ public class RegisterController {
     }
 
     @PostMapping("/register")
-    public Response newUser(@RequestBody User user){
+    public Response newUser(@RequestBody User user) {
         return registerService.newUser(user);
     }
 }
