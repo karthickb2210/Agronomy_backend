@@ -21,7 +21,7 @@ public class SecurityConfig {
                         .requestMatchers("/","/addSubscription","/admin/getStocks","/updateStocks","/test","/testMessage","/sendMail","/create-order",
                                 "/verify-payment","/register","/checkUser","/getDashDetails/{email}","/addOrder","/admin/updateStocks",
                                 "/admin/getAllSubscriptions","/admin/getAllOrders","/existsByMail/{email}",
-                                "/addAddress","/getAllAddress/{email}","/deleteUser/{mail}"
+                                "/addAddress","/getAllAddress/{email}","/deleteUser/{mail}","/updateAddress/{id}"
                                 ,"/updatePorterId/{id}/{porterId}","/updateOrderStatus/{id}/{status}"
                                         ).permitAll() // Allow access to /public without authentication
                         .anyRequest().authenticated() // All endpoints require authentication

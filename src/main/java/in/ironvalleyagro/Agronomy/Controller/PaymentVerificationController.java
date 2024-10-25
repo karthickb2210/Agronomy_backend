@@ -15,13 +15,8 @@ public class PaymentVerificationController {
     @PostMapping("/verify-payment")
     public boolean verifyPayment(@RequestBody RazorPay razorPay) throws Exception {
 
-
-        RazorpayClient razorpayClient = new RazorpayClient("rzp_test_wbXDO68U56KR2k", "xNHTSwpWL6pLzNHVujb0iBX6");
-
-
+        // RazorpayClient razorpayClient = new RazorpayClient("rzp_test_wbXDO68U56KR2k", "xNHTSwpWL6pLzNHVujb0iBX6");
         String secret = "WK4szpsjvFbz8lPgVzCe0a7d";
-
-
         JSONObject options = new JSONObject();
         options.put("razorpay_order_id", razorPay.getRazor_pay_order_id());
         options.put("razorpay_payment_id", razorPay.getRazorpay_payment_id());

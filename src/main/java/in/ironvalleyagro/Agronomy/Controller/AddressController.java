@@ -17,6 +17,11 @@ public class AddressController {
         return addressServices.addAddress(addressDto);
     }
 
+    @PostMapping("/updateAddress/{id}")
+    public Response updateAddress(@RequestBody AddressDto addressDto,@PathVariable long id){
+        return addressServices.updateAddress(addressDto,id);
+    }
+
     @GetMapping("/getAllAddress/{email}")
     public Response getAddress(@PathVariable String email){
         return addressServices.getAddress(email);
