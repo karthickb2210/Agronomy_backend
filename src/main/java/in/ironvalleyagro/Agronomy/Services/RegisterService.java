@@ -43,6 +43,7 @@ public class RegisterService {
             authUserRepository.save(authUser);
             User newUser = userRepository.save(user);
 //            if(newUser.getId()!=0){
+//                System.out.println("Mail sender triggered");
 //                mailSenderService.sendRegisterMail(newUser.getMail(),newUser.getUsername());
 //            }
             res.setData(newUser);
