@@ -21,24 +21,34 @@ public class RegisterService {
     @Autowired
     private SequenceGeneratorService generatorService;
 
+    @Autowired
+    private MailSenderService mailSenderService;
+
     boolean flag;
     public Response newUser(User user){
         Response res = new Response();
-        if(userRepository.existsByMail(user.getMail())) {
-            res.setStatusCode(ResponseCode.DUPLICATE_MAIL_ENTRY);
-            return res;
+        try {
+            if (userRepository.existsByMail(user.getMail())) {
+                res.setStatusCode(ResponseCode.DUPLICATE_MAIL_ENTRY);
+                return res;
+            }
+            long newId = generatorService.generateSequence(AuthUser.SEQUENCE_NAME);
+            user.setPassword(user.getPassword());
+            user.setId(newId);
+            AuthUser authUser = new AuthUser();
+            authUser.setId(newId);
+            authUser.setUsername(user.getMail());
+            authUser.setPassword(user.getPassword());
+            authUser.setActive(true);
+            authUserRepository.save(authUser);
+            User newUser = userRepository.save(user);
+//            if(newUser.getId()!=0){
+//                mailSenderService.sendRegisterMail(newUser.getMail(),newUser.getUsername());
+//            }
+            res.setData(newUser);
+        }catch (Exception e){
+            e.printStackTrace();
         }
-        long newId = generatorService.generateSequence(AuthUser.SEQUENCE_NAME);
-        user.setPassword(user.getPassword());
-        user.setId(newId);
-        AuthUser authUser = new AuthUser();
-        authUser.setId(newId);
-        authUser.setUsername(user.getMail());
-        authUser.setPassword(user.getPassword());
-        authUser.setActive(true);
-        authUserRepository.save(authUser);
-        User newUser = userRepository.save(user);
-        res.setData(newUser);
         return res;
     }
 }

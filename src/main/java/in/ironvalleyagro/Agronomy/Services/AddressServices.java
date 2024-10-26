@@ -36,6 +36,22 @@ public class AddressServices {
     @Autowired
     private MongoTemplate mongoTemplate;
 
+    public  Response deleteAddress(long id){
+        Response res = new Response();
+        try{
+            if(addressRepository.existsById(id)){
+                addressRepository.deleteById(id);
+                res.setFlag(true);
+                res.setStatusCode(ResponseCode.CODE_SUCCESS);
+            }else{
+                res.setStatusCode(ResponseCode.DATA_NOT_FOUND);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return res;
+    }
+
     public Response updateAddress(AddressDto addressDto,long id){
         Response res = new Response();
         try{
@@ -58,6 +74,7 @@ public class AddressServices {
         }
         return res;
     }
+
 
     private static @NotNull Address getNewAddress(AddressDto addressDto, long id, Optional<Address> address) {
 

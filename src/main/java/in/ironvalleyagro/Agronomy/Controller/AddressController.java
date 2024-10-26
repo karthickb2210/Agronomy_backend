@@ -17,6 +17,11 @@ public class AddressController {
         return addressServices.addAddress(addressDto);
     }
 
+    @DeleteMapping("/deleteAddress/{id}")
+    public Response deleteAddress(@PathVariable long id){
+        return addressServices.deleteAddress(id);
+    }
+
     @PostMapping("/updateAddress/{id}")
     public Response updateAddress(@RequestBody AddressDto addressDto,@PathVariable long id){
         return addressServices.updateAddress(addressDto,id);
