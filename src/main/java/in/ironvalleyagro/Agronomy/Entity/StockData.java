@@ -20,5 +20,6 @@ public class StockData {
     private long basilQuantity;
     private long kaleQuantity;
     private long lettuceQuantity;
+    private long argulaQuantity;
 
 }

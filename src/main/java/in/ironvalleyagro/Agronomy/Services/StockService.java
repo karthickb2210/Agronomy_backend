@@ -21,7 +21,7 @@ public class StockService {
     public Response adminStockUpdate(StockData stockData){
         Response res = new Response();
         try{
-            Optional<StockData> oldStockData= stockDataRepository.findById("0");
+            Optional<StockData> oldStockData = stockDataRepository.findById("0");
             StockData newStockData = new StockData();
             newStockData.setItemId("0");
             newStockData.setLettuceQuantity(stockData.getLettuceQuantity());
@@ -29,6 +29,7 @@ public class StockService {
             newStockData.setBabySpinachQuantity(stockData.getBabySpinachQuantity());
             newStockData.setBasilQuantity(stockData.getBasilQuantity());
             newStockData.setPakChoiQuantity(stockData.getPakChoiQuantity());
+            newStockData.setArgulaQuantity(stockData.getArgulaQuantity());
             stockDataRepository.save(newStockData);
             res.setFlag(true);
             res.setStatusCode(ResponseCode.CODE_SUCCESS);
@@ -54,6 +55,7 @@ public class StockService {
             stocks.setBabySpinachQuantity(stocks.getBabySpinachQuantity()-currentStockDetections.getBabySpinachQuantityDetections());
             stocks.setKaleQuantity(stocks.getKaleQuantity()-currentStockDetections.getKaleQuantityDetections());
             stocks.setBasilQuantity(stocks.getBasilQuantity()-currentStockDetections.getBasilQuantityDetections());
+            stocks.setArgulaQuantity(stocks.getArgulaQuantity()-currentStockDetections.getArgulaQuantityDetections());
             stockDataRepository.save(stocks);
         }catch (Exception e){
             e.printStackTrace();

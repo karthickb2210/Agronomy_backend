@@ -9,4 +9,5 @@ public class CurrentStockDetections {
     private long basilQuantityDetections;
     private long kaleQuantityDetections;
     private long lettuceQuantityDetections;
+    private long argulaQuantityDetections;
 }

@@ -1,5 +1,6 @@
 package in.ironvalleyagro.Agronomy.Entity;
 
+import in.ironvalleyagro.Agronomy.Model.OrderDetails;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,6 +12,7 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @Builder
@@ -25,7 +27,7 @@ public class Order {
     private String email;
     @Indexed
     private long userid;
-    private Object orderDetails;
+    private List<OrderDetails> orderDetails;
     private String paymentId;
     private Object address;
     private String porterTrackerId;

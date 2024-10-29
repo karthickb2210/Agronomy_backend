@@ -4,10 +4,8 @@ import com.mongodb.MongoException;
 import in.ironvalleyagro.Agronomy.Entity.StockData;
 import in.ironvalleyagro.Agronomy.Model.AuthUser;
 import in.ironvalleyagro.Agronomy.Model.Response;
-import in.ironvalleyagro.Agronomy.Models.MailDetails;
 import in.ironvalleyagro.Agronomy.Repository.AuthUserRepository;
 import in.ironvalleyagro.Agronomy.Repository.StockDataRepository;
-import in.ironvalleyagro.Agronomy.Services.MailSenderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
@@ -16,8 +14,6 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class TestController {
 
-
-
     @Autowired
     private AuthUserRepository authUserRepository;
 
@@ -25,7 +21,7 @@ public class TestController {
     private StockDataRepository stockDataRepository;
 
 
-    @GetMapping("/")
+    @GetMapping("/restore")
     public Response testLink(){
         Response res = new Response();
         StockData stockData = new StockData();
@@ -35,7 +31,8 @@ public class TestController {
         stockData.setLettuceQuantity(9000);
         stockData.setBabySpinachQuantity(9000);
         stockData.setPakChoiQuantity(9000);
-        stockDataRepository.insert(stockData);
+        stockData.setArgulaQuantity(9000);
+        stockDataRepository.save(stockData);
         return res;
     }
 

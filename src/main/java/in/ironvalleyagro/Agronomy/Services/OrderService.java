@@ -26,7 +26,13 @@ public class OrderService {
     private SequenceGeneratorService generatorService;
 
     @Autowired
+    private MailSenderService mailSenderService;
+
+    @Autowired
     private OrderRepository orderRepository;
+
+    @Autowired
+    private SmsService smsService;
 
     @Autowired
     private MongoTemplate mongoTemplate;
@@ -77,7 +83,11 @@ public class OrderService {
             order.setPorterTrackerId("0");
             order.setAmountPaid(orderDto.getAmountPaid());
             Order newOrder = orderRepository.save(order);
+            // smsService.sendSms("+919092052012","Your Order has been confirmed");
             res.setStatusCode(ResponseCode.CODE_SUCCESS);
+            if(res.getStatusCode()==200){
+                mailSenderService.sentOrderMail(newOrder);
+            }
             res.setData(newOrder);
         }catch (Exception e){
             e.printStackTrace();
