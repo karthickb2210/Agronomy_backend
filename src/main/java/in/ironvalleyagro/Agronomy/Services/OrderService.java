@@ -31,8 +31,8 @@ public class OrderService {
     @Autowired
     private OrderRepository orderRepository;
 
-    @Autowired
-    private SmsService smsService;
+//    @Autowired
+//    private SmsService smsService;
 
     @Autowired
     private MongoTemplate mongoTemplate;
@@ -83,11 +83,14 @@ public class OrderService {
             order.setPorterTrackerId("0");
             order.setAmountPaid(orderDto.getAmountPaid());
             Order newOrder = orderRepository.save(order);
-            // smsService.sendSms("+919092052012","Your Order has been confirmed");
-            res.setStatusCode(ResponseCode.CODE_SUCCESS);
-            if(res.getStatusCode()==200){
+            if(newOrder.getOrderId()!=0) {
+//                String ans = smsService.sendOrderSms("91", "C-1ECC5887B32342A", "UTOMOB", "SMS", "SMS", "9092052012",
+//                        "Welcome to Message Central. We are delighted to have you here! - Powered by U2opia");
+//                System.out.println(ans);
                 mailSenderService.sentOrderMail(newOrder);
             }
+           res.setStatusCode(ResponseCode.CODE_SUCCESS);
+
             res.setData(newOrder);
         }catch (Exception e){
             e.printStackTrace();

@@ -6,10 +6,16 @@ import in.ironvalleyagro.Agronomy.Model.AuthUser;
 import in.ironvalleyagro.Agronomy.Model.Response;
 import in.ironvalleyagro.Agronomy.Repository.AuthUserRepository;
 import in.ironvalleyagro.Agronomy.Repository.StockDataRepository;
+import in.ironvalleyagro.Agronomy.Services.MailSenderService;
+import in.ironvalleyagro.Agronomy.Services.SmsService;
+import jakarta.mail.MessagingException;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import org.springframework.web.bind.annotation.*;
+
 
 @RestController
 public class TestController {
@@ -21,18 +27,30 @@ public class TestController {
     private StockDataRepository stockDataRepository;
 
 
+    @Autowired
+    private MailSenderService mailSenderService;
+
+
+
+
     @GetMapping("/restore")
-    public Response testLink(){
+    public Response testLink() throws MessagingException {
         Response res = new Response();
-        StockData stockData = new StockData();
-        stockData.setItemId("0");
-        stockData.setBasilQuantity(9000);
-        stockData.setKaleQuantity(9000);
-        stockData.setLettuceQuantity(9000);
-        stockData.setBabySpinachQuantity(9000);
-        stockData.setPakChoiQuantity(9000);
-        stockData.setArgulaQuantity(9000);
-        stockDataRepository.save(stockData);
+        mailSenderService.sendWelcomeEmail("k9994728@gmail.com","Karthick B");
+
+
+//        StockData stockData = new StockData();
+//        stockData.setItemId("0");
+//        stockData.setBasilQuantity(9000);
+//        stockData.setKaleQuantity(9000);
+//        stockData.setLettuceQuantity(9000);
+//        stockData.setBabySpinachQuantity(9000);
+//        stockData.setPakChoiQuantity(9000);
+//        stockData.setArgulaQuantity(9000);
+//        stockDataRepository.save(stockData);
+
+
+
         return res;
     }
 

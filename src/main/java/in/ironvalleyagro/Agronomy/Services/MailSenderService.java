@@ -11,6 +11,11 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
 
 @Service
@@ -27,23 +32,34 @@ public class MailSenderService {
         mailSender.send(message);
     }
 
-    public Response sendRegisterMail(String mailId,String userName) throws MessagingException {
-        Response res = new Response();
-        try{
-            MimeMessage message = mailSender.createMimeMessage();
-            MimeMessageHelper helper = new MimeMessageHelper(message, "utf-8");
-            helper.setText("Welcome to Iron Valley");
-            helper.setTo(mailId);
-            helper.setSubject("Welcome");
-            helper.setFrom("ironvalleysolutionsllp@gmail.com");
-            System.out.println(helper.toString());
-            mailSender.send(message);
-        }catch (Exception e){
-            e.printStackTrace();
+    public void sendWelcomeEmail(String to, String customerName) throws MessagingException {
+        MimeMessage message = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+
+        // Load HTML template as a string
+        String content;
+        try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream("WelcomeTemplate.html")) {
+            if (inputStream == null) {
+                throw new MessagingException("Could not find email template in resources");
+            }
+            content = new String(inputStream.readAllBytes(), StandardCharsets.UTF_8);
+        } catch (IOException e) {
+            throw new MessagingException("Could not read email template", e);
         }
-        return res;
+
+        // Replace placeholders with actual values
+        content = content.replace("{{customerName}}", customerName);
+        content = content.replace("{{link_to_your_site}}", "https://ironvalleyagro.in");
+
+        helper.setTo(to);
+        helper.setSubject("Welcome to IronValley Agronomy!");
+        helper.setText(content, true);  // true indicates HTML content
+
+        mailSender.send(message);
     }
-    public boolean sentOrderMail(Order order) throws MessagingException {
+
+
+    public void sentOrderMail(Order order) throws MessagingException {
         MimeMessage message = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true);
 
@@ -58,7 +74,6 @@ public class MailSenderService {
         helper.setText(content, true);  // true indicates HTML content
 
         mailSender.send(message);
-        return true;
     }
 
     private String buildOrderTemplate(Order order) {

@@ -5,9 +5,11 @@ import in.ironvalleyagro.Agronomy.Entity.User;
 import in.ironvalleyagro.Agronomy.Model.Response;
 import in.ironvalleyagro.Agronomy.Repository.AuthUserRepository;
 import in.ironvalleyagro.Agronomy.Repository.UserRepository;
+import in.ironvalleyagro.Agronomy.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.init.ResourceReaderRepositoryPopulator;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,6 +21,14 @@ public class UserController {
 
     @Autowired
     private AuthUserRepository authUserRepository;
+
+    @Autowired
+    private UserService userService;
+
+    @GetMapping("/changeMobileNumber/{mail}/{newNumber}")
+    public Response changeMobileNumber(@PathVariable String mail,@PathVariable String newNumber){
+        return userService.changeMobileNumber(mail, newNumber);
+    }
 
     @DeleteMapping("/deleteUser/{mail}")
     public Response deleteAccount(@PathVariable String mail){
