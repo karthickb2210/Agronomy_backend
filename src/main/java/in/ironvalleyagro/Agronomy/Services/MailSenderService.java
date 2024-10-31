@@ -6,6 +6,7 @@ import in.ironvalleyagro.Agronomy.Model.Response;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -15,6 +16,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
@@ -59,41 +61,38 @@ public class MailSenderService {
     }
 
 
-    public void sentOrderMail(Order order) throws MessagingException {
+    public void sentOrderMail(Order order) throws MessagingException, IOException {
         MimeMessage message = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true);
 
         helper.setTo(order.getEmail());
-        String[] bcc = {"karthickb2210@gmail.com"};
-        helper.setBcc(bcc);
-        helper.setSubject("Order Confirmation");
-        helper.setFrom("ironvalleysolutionsllp@gmail.com");
+        helper.setSubject("Order Confirmation - IronValley Agronomy");
 
-        // Create HTML content with order details
-        String content = buildOrderTemplate(order);
-        helper.setText(content, true);  // true indicates HTML content
+        // Load and populate HTML template
+        String htmlContent = loadAndPopulateTemplate(order);
+        helper.setText(htmlContent, true);
 
         mailSender.send(message);
     }
 
-    private String buildOrderTemplate(Order order) {
-        // Build an HTML template for the order confirmation email
-        String itemsHtml = generateItemsHtml(order.getOrderDetails());
-        return "<html>"
-                + "<body>"
-                + "<h1>Order Confirmation</h1>"
-                + "<p>Thank you for your order!</p>"
-                + "<h2>Order Details</h2>"
-                + "<p><strong>Order ID:</strong> " + order.getOrderId() + "</p>"
-                + "<p><strong>Order Date:</strong> " + order.getCreatedAt().toString().substring(0,10) + "</p>"
-                + "<p><strong>Total Amount:</strong> ₹" + order.getAmountPaid() + "</p>"
-                + "<h3>Items:</h3>"
-                + "<ul>" + itemsHtml + "</ul>"
-                + "<p>We appreciate your business and hope you enjoy your purchase!</p>"
-                + "<p>Thanks and Regards, </p>"
-                + "<p>IronValley Agronomy </p>"
-                + "</body>"
-                + "</html>";
+    private String loadAndPopulateTemplate(Order order) throws IOException {
+        // Load HTML template as a string
+        Path templatePath = new ClassPathResource("order-confirmation.html").getFile().toPath();
+        String htmlContent = Files.readString(templatePath, StandardCharsets.UTF_8);
+
+        // Create order items table rows
+        StringBuilder itemsBuilder = new StringBuilder();
+        for (OrderDetails order1 : order.getOrderDetails()) {
+            itemsBuilder.append("<tr>")
+                    .append("<td>").append(order1.getItemName()).append("</td>")
+                    .append("<td>").append(order1.getItemQuantity()).append("</td>")
+                    .append("<td>").append(order1.getItemGrams()).append("</td>")
+                    .append("</tr>");
+        }
+        String content = htmlContent.replace("<!-- ORDER_ID_PLACEHOLDER -->",String.valueOf(order.getOrderId()));
+        String amountPaidContent = content.replace("<!-- AMOUNT_PAID_PLACEHOLDER -->",String.valueOf(order.getAmountPaid()));
+        // Replace placeholder with actual table rows
+        return amountPaidContent.replace("<!-- ORDER_ITEMS_PLACEHOLDER -->", itemsBuilder.toString());
     }
 
     private String generateItemsHtml(List<OrderDetails> orders) {

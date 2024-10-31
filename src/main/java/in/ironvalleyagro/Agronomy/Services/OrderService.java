@@ -84,9 +84,6 @@ public class OrderService {
             order.setAmountPaid(orderDto.getAmountPaid());
             Order newOrder = orderRepository.save(order);
             if(newOrder.getOrderId()!=0) {
-//                String ans = smsService.sendOrderSms("91", "C-1ECC5887B32342A", "UTOMOB", "SMS", "SMS", "9092052012",
-//                        "Welcome to Message Central. We are delighted to have you here! - Powered by U2opia");
-//                System.out.println(ans);
                 mailSenderService.sentOrderMail(newOrder);
             }
            res.setStatusCode(ResponseCode.CODE_SUCCESS);
