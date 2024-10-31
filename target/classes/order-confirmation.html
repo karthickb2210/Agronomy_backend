@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 95%;
+            margin: 5px auto;
+            background-color: #ffffff;
+            padding: 5px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            color: #4CAF50;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .footer {
+            margin-top: 20px;
+            font-size: 0.9em;
+            color: #555;
+            text-align: center;
+        }
+        .order-info {
+            margin-top: 20px;
+            font-size: 1em;
+        }
+        .order-info p {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>Thank you for your order!</h2>
+    <p>We appreciate your purchase from our Agronomy store. Here are the details of your order:</p>
+
+    <div class="order-info">
+        <p><strong>Order ID:</strong> <!-- ORDER_ID_PLACEHOLDER --></p>
+        <p><strong>Amount Paid:</strong> ₹<!-- AMOUNT_PAID_PLACEHOLDER --></p>
+    </div>
+
+    <table>
+        <thead>
+        <tr>
+            <th>Item Name</th>
+            <th>Quantity</th>
+            <th>Weight (grams)</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- ORDER_ITEMS_PLACEHOLDER -->
+        </tbody>
+    </table>
+
+    <div class="footer">
+        <p>If you have any questions about your order, feel free to contact us at support@yourgreens.com.</p>
+        <p>&copy; 2024 IronValley Agronomy. All rights reserved.</p>
+        <p>IronValley Agronomy | Chennai | +91-8754461696 | info@ironvalleyagro.in</p>
+    </div>
+</div>
+</body>
+</html>
