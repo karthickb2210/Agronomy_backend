@@ -1,8 +1,10 @@
 package in.ironvalleyagro.Agronomy.Services;
 
+import in.ironvalleyagro.Agronomy.Constant.ResponseCode;
 import in.ironvalleyagro.Agronomy.Entity.Order;
 import in.ironvalleyagro.Agronomy.Model.OrderDetails;
 import in.ironvalleyagro.Agronomy.Model.Response;
+import in.ironvalleyagro.Agronomy.Repository.UserRepository;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,11 +21,22 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Random;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 @Service
 public class MailSenderService {
     @Autowired
     private JavaMailSender mailSender;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    private final ConcurrentHashMap<String, String> otpStorage = new ConcurrentHashMap<>();
+    private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
     public void sendEmail(String toEmail,String subject,String body){
         SimpleMailMessage message = new SimpleMailMessage();
@@ -103,16 +116,61 @@ public class MailSenderService {
         return amountPaidContent.replace("<!-- ORDER_ITEMS_PLACEHOLDER -->", itemsBuilder.toString());
     }
 
-//    private String generateItemsHtml(List<OrderDetails> orders) {
-//        StringBuilder itemsHtml = new StringBuilder();
-//        for (OrderDetails item : orders) {
-//            itemsHtml.append("<li>")
-//                    .append(item.getItemName()).append(" - Qty: ").append(item.getItemQuantity())
-//                    .append(" - Weight: ").append(item.getItemGrams()).append(" grams")
-//                    .append("</li>");
-//        }
-//        return itemsHtml.toString();
-//    }
+    public Response sendOtp(String mail){
+        Response res = new Response();
+        try{
+            if(!userRepository.existsByMail(mail)){
+                res.setStatusCode(ResponseCode.DATA_NOT_FOUND);
+                return res;
+            }
+            String otp = generateOtp();
+
+            // Store OTP with email as key
+            otpStorage.put(mail, otp);
+
+            // Set OTP to expire in 5 minutes
+            scheduler.schedule(() -> otpStorage.remove(mail), 5, TimeUnit.MINUTES);
+
+            SimpleMailMessage message = new SimpleMailMessage();
+            message.setTo(mail);
+            message.setSubject("OTP FOR IRONVALLEY AGRONOMY");
+            message.setText("Your OTP code is: " + otp);
+
+            // Send email
+            mailSender.send(message);
+            res.setFlag(true);
+            res.setStatusCode(ResponseCode.CODE_SUCCESS);
+            System.out.println("OTP sent to " + mail + ": " + otp);
+        }catch (Exception e){
+            res.setStatusCode(ResponseCode.CONFLICT);
+            e.printStackTrace();
+        }
+        return res;
+    }
+
+    public Response verifyOtp(String email, String otp) {
+        Response res = new Response();
+        String storedOtp = otpStorage.get(email);
+        // Verify if the OTP matches and remove it once verified
+        if (storedOtp != null && storedOtp.equals(otp)) {
+            otpStorage.remove(email);
+            res.setFlag(true);
+            res.setStatusCode(ResponseCode.CODE_SUCCESS);
+            res.setData(userRepository.findByMail(email));
+            return res;
+        }
+        res.setStatusCode(ResponseCode.DATA_NOT_FOUND);
+        return res;
+    }
+
+    public String generateOtp() {
+        // Generate a random 6-digit OTP
+        int otp = 100000 + new Random().nextInt(900000);
+        return String.valueOf(otp);
+    }
+
+
+
 
 
 }

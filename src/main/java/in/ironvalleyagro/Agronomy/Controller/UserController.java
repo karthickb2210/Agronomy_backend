@@ -5,6 +5,7 @@ import in.ironvalleyagro.Agronomy.Entity.User;
 import in.ironvalleyagro.Agronomy.Model.Response;
 import in.ironvalleyagro.Agronomy.Repository.AuthUserRepository;
 import in.ironvalleyagro.Agronomy.Repository.UserRepository;
+import in.ironvalleyagro.Agronomy.Services.MailSenderService;
 import in.ironvalleyagro.Agronomy.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.init.ResourceReaderRepositoryPopulator;
@@ -25,9 +26,22 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private MailSenderService mailSenderService;
+
     @GetMapping("/changeMobileNumber/{mail}/{newNumber}")
     public Response changeMobileNumber(@PathVariable String mail,@PathVariable String newNumber){
         return userService.changeMobileNumber(mail, newNumber);
+    }
+
+    @GetMapping("/sendOtp/{mail}")
+    public Response sendOtp(@PathVariable String mail){
+        return mailSenderService.sendOtp(mail);
+    }
+
+    @GetMapping("/verifyOtp/{mail}/{otp}")
+    public Response verifyOtp(@PathVariable String mail,@PathVariable String otp){
+        return mailSenderService.verifyOtp(mail,otp);
     }
 
     @DeleteMapping("/deleteUser/{mail}")
