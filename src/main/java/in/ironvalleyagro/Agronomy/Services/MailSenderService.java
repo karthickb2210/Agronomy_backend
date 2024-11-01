@@ -40,7 +40,7 @@ public class MailSenderService {
 
     public void sendEmail(String toEmail,String subject,String body){
         SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom("ironvalleysolutionsllp@gmail.com");
+        message.setFrom("info@ironvalleyagro.in");
         message.setTo(toEmail);
         message.setText(body);
         message.setSubject(subject);
@@ -67,6 +67,7 @@ public class MailSenderService {
         content = content.replace("{{link_to_your_site}}", "https://ironvalleyagro.in");
 
         helper.setTo(to);
+        helper.setFrom("info@ironvalleyagro.in");
         helper.setSubject("Welcome to IronValley Agronomy!");
         helper.setText(content, true);  // true indicates HTML content
 
@@ -79,6 +80,8 @@ public class MailSenderService {
         MimeMessageHelper helper = new MimeMessageHelper(message, true);
 
         helper.setTo(order.getEmail());
+        // String[] bcc = {};
+        helper.setFrom("info@ironvalleyagro.in");
         helper.setSubject("Order Confirmation - IronValley Agronomy");
 
         // Load and populate HTML template
@@ -88,7 +91,7 @@ public class MailSenderService {
         mailSender.send(message);
     }
 
-    private String loadAndPopulateTemplate(Order order) throws IOException,MessagingException
+    private String loadAndPopulateTemplate(Order order) throws MessagingException
     {
         // Load HTML template as a string
         String htmlContent;
@@ -133,6 +136,7 @@ public class MailSenderService {
 
             SimpleMailMessage message = new SimpleMailMessage();
             message.setTo(mail);
+            message.setFrom("info@ironvalleyagro.in");
             message.setSubject("OTP FOR IRONVALLEY AGRONOMY");
             message.setText("Your OTP code is: " + otp);
 
