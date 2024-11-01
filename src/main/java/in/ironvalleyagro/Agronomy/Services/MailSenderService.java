@@ -2,6 +2,7 @@ package in.ironvalleyagro.Agronomy.Services;
 
 import in.ironvalleyagro.Agronomy.Constant.ResponseCode;
 import in.ironvalleyagro.Agronomy.Entity.Order;
+import in.ironvalleyagro.Agronomy.Entity.User;
 import in.ironvalleyagro.Agronomy.Model.OrderDetails;
 import in.ironvalleyagro.Agronomy.Model.Response;
 import in.ironvalleyagro.Agronomy.Repository.UserRepository;
@@ -165,6 +166,35 @@ public class MailSenderService {
         }
         res.setStatusCode(ResponseCode.DATA_NOT_FOUND);
         return res;
+    }
+
+    public boolean sendDeliveredEmail(Order order) throws MessagingException {
+        MimeMessage message = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+
+        // Load HTML template as a string
+        String content;
+        try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream("Order-Delivered.html")) {
+            if (inputStream == null) {
+                throw new MessagingException("Could not find email template in resources");
+            }
+            content = new String(inputStream.readAllBytes(), StandardCharsets.UTF_8);
+        } catch (IOException e) {
+            throw new MessagingException("Could not read email template", e);
+        }
+
+        // Replace placeholders with actual values
+        User user = userRepository.findByMail(order.getEmail());
+        content = content.replace("{{customerName}}",user.getUsername());
+        content = content.replace("{{orderId}}", String.valueOf(order.getOrderId()));
+
+        helper.setTo(order.getEmail());
+        helper.setFrom("info@ironvalleyagro.in");
+        helper.setSubject("Ordered Delivered!!");
+        helper.setText(content, true);  // true indicates HTML content
+
+        mailSender.send(message);
+        return true;
     }
 
     public String generateOtp() {

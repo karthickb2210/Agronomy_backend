@@ -15,6 +15,7 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Service
 public class OrderService {
@@ -102,11 +103,14 @@ public class OrderService {
                 res.setStatusCode(ResponseCode.DATA_NOT_FOUND);
                 return res;
             }
+            Optional<Order> order = orderRepository.findById(id);
             boolean temp = status == 1;
             Query query = new Query(Criteria.where("_id").is(id));
             Update update = new Update().set("isDelivered", temp);
             UpdateResult updateResult = mongoTemplate.updateFirst(query, update, Order.class);
-            if(updateResult.getModifiedCount()==1){
+            if(updateResult.getModifiedCount()==1 && order.isPresent()){
+                mailSenderService.sendDeliveredEmail(order.get());
+
                 res.setFlag(true);
             }
             res.setStatusCode(ResponseCode.CODE_SUCCESS);

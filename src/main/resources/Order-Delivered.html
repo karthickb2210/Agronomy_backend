@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thank You for Your Order!</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            color: #333;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .email-container {
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #ffffff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .header {
+            background-color: #4caf50;
+            color: #ffffff;
+            padding: 20px;
+            text-align: center;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+        .content {
+            padding: 20px;
+        }
+        .content h2 {
+            color: #4caf50;
+            font-size: 20px;
+        }
+        .content p {
+            line-height: 1.6;
+        }
+        .cta-button {
+            display: inline-block;
+            padding: 10px 20px;
+            color: #ffffff;
+            background-color: #4caf50;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .discount-section {
+            background-color: #f7f7f7;
+            padding: 15px;
+            border-radius: 5px;
+            text-align: center;
+            margin-top: 20px;
+        }
+        .discount-section p {
+            font-size: 18px;
+            color: #333;
+            margin: 10px 0;
+        }
+        .footer {
+            background-color: #4caf50;
+            color: #ffffff;
+            text-align: center;
+            padding: 15px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+<div class="email-container">
+    <div class="header">
+        <h1>Your Order Has Been Delivered!</h1>
+    </div>
+    <div class="content">
+        <h2>Thank you, {{customerName}}!</h2>
+        <p>Your recent order from Ironvalley Agronomy with order id - {{orderId}} has successfully reached you. We hope you are enjoying your purchase!</p>
+
+        <p>As a valued customer, we’d love to continue being part of your shopping journey. Feel free to explore more of our products or reorder anytime you need.</p>
+
+        <div style="text-align: center; margin: 20px 0;">
+            <a href="https://ironvalleyagro.in/store" class="cta-button">Shop Again</a>
+        </div>
+
+<!--        <div class="discount-section">-->
+<!--            <p><strong>Enjoy 10% off on your next purchase!</strong></p>-->
+<!--            <p>Use code: <strong>NEXT10</strong> at checkout</p>-->
+<!--        </div>-->
+
+        <p>If you have any questions, feel free to reach us at <a href="mailto:info@ironvalleyagro.in">info@ironvalleyagro.in</a>. We’re here to help!</p>
+    </div>
+    <div class="footer">
+        <p>Thank you for choosing us!</p>
+        <p>&copy; 2024 Ironvalley Agronomy. All rights reserved.</p>
+    </div>
+</div>
+</body>
+</html>
