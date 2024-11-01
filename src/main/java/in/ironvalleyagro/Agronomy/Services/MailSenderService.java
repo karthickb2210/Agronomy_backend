@@ -75,10 +75,18 @@ public class MailSenderService {
         mailSender.send(message);
     }
 
-    private String loadAndPopulateTemplate(Order order) throws IOException {
+    private String loadAndPopulateTemplate(Order order) throws IOException,MessagingException
+    {
         // Load HTML template as a string
-        Path templatePath = new ClassPathResource("order-confirmation.html").getFile().toPath();
-        String htmlContent = Files.readString(templatePath, StandardCharsets.UTF_8);
+        String htmlContent;
+        try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream("order-confirmation.html")) {
+            if (inputStream == null) {
+                throw new MessagingException("Could not find email template in resources");
+            }
+            htmlContent = new String(inputStream.readAllBytes(), StandardCharsets.UTF_8);
+        } catch (IOException | MessagingException e) {
+            throw new MessagingException("Could not read email template", e);
+        }
 
         // Create order items table rows
         StringBuilder itemsBuilder = new StringBuilder();
@@ -95,16 +103,16 @@ public class MailSenderService {
         return amountPaidContent.replace("<!-- ORDER_ITEMS_PLACEHOLDER -->", itemsBuilder.toString());
     }
 
-    private String generateItemsHtml(List<OrderDetails> orders) {
-        StringBuilder itemsHtml = new StringBuilder();
-        for (OrderDetails item : orders) {
-            itemsHtml.append("<li>")
-                    .append(item.getItemName()).append(" - Qty: ").append(item.getItemQuantity())
-                    .append(" - Weight: ").append(item.getItemGrams()).append(" grams")
-                    .append("</li>");
-        }
-        return itemsHtml.toString();
-    }
+//    private String generateItemsHtml(List<OrderDetails> orders) {
+//        StringBuilder itemsHtml = new StringBuilder();
+//        for (OrderDetails item : orders) {
+//            itemsHtml.append("<li>")
+//                    .append(item.getItemName()).append(" - Qty: ").append(item.getItemQuantity())
+//                    .append(" - Weight: ").append(item.getItemGrams()).append(" grams")
+//                    .append("</li>");
+//        }
+//        return itemsHtml.toString();
+//    }
 
 
 }
