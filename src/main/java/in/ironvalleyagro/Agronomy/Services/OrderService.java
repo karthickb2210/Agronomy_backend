@@ -5,6 +5,7 @@ import in.ironvalleyagro.Agronomy.Constant.ResponseCode;
 import in.ironvalleyagro.Agronomy.DTO.OrderDto;
 import in.ironvalleyagro.Agronomy.Entity.Order;
 import in.ironvalleyagro.Agronomy.Entity.User;
+import in.ironvalleyagro.Agronomy.Model.LastOrderWithCred;
 import in.ironvalleyagro.Agronomy.Model.Response;
 import in.ironvalleyagro.Agronomy.Repository.OrderRepository;
 import in.ironvalleyagro.Agronomy.Repository.UserRepository;
@@ -37,6 +38,22 @@ public class OrderService {
 
     @Autowired
     private MongoTemplate mongoTemplate;
+
+    public Response getLastOrder(long id){
+        Response res = new Response();
+        try{
+            LastOrderWithCred lastOrderWithCred = new LastOrderWithCred();
+            lastOrderWithCred.setOrder(orderRepository.findTopByUseridOrderByCreatedAtDesc(id));
+            if(userRepository.findById(id).isPresent()){
+                lastOrderWithCred.setUser(userRepository.findById(id).get());
+            }
+            res.setData(lastOrderWithCred);
+            res.setFlag(true);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return  res;
+    }
 
     public Response updatePorterId(long id,String porterId){
         Response res=  new Response();

@@ -9,4 +9,6 @@ public interface OrderRepository extends MongoRepository<Order,Long> {
     List<Order> findAllByUserid(long id);
 
     List<Order> findAllByEmail(String mail);
+
+    Order findTopByUseridOrderByCreatedAtDesc(long userId);
 }

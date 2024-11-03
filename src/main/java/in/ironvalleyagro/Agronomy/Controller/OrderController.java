@@ -12,6 +12,11 @@ public class OrderController {
     @Autowired
     private OrderService orderService;
 
+    @GetMapping("/getLastOrderDetails/{id}")
+    public Response getLastOrderDetails(@PathVariable long id){
+           return orderService.getLastOrder(id);
+    }
+
     @GetMapping("/admin/getAllOrders")
     public Response getAllOrders(){
         return orderService.getAllOrders();
