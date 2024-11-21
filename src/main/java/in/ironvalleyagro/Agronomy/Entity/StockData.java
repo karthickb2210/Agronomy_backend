@@ -21,5 +21,13 @@ public class StockData {
     private long kaleQuantity;
     private long lettuceQuantity;
     private long argulaQuantity;
-
+    private long beetRootQuantity;
+    private long radishPurpleQuantity;
+    private long radishWhiteQuantity;
+    private long radishPinkQuantity;
+    private long mustardQuantity;
+    private long sunflowerQuantity;
+    private long peaShootQuantity;
+    private long broccoliQuantity;
+    private long redCabbageQuantity;
 }

@@ -56,6 +56,15 @@ public class StockService {
             stocks.setKaleQuantity(stocks.getKaleQuantity()-currentStockDetections.getKaleQuantityDetections());
             stocks.setBasilQuantity(stocks.getBasilQuantity()-currentStockDetections.getBasilQuantityDetections());
             stocks.setArgulaQuantity(stocks.getArgulaQuantity()-currentStockDetections.getArgulaQuantityDetections());
+            stocks.setBeetRootQuantity(stocks.getBeetRootQuantity()-currentStockDetections.getBeetRootQuantityDetections());
+            stocks.setRadishPurpleQuantity(stocks.getRadishPurpleQuantity()- currentStockDetections.getRadishPurpleQuantityDetections());
+            stocks.setRadishPinkQuantity(stocks.getRadishPinkQuantity()- currentStockDetections.getRadishPinkQuantityDetections());
+            stocks.setRadishWhiteQuantity(stocks.getRadishWhiteQuantity()- currentStockDetections.getRadishWhiteQuantityDetections());
+            stocks.setMustardQuantity(stocks.getMustardQuantity()- currentStockDetections.getMustardQuantityDetections());
+            stocks.setBroccoliQuantity(stocks.getBroccoliQuantity()- currentStockDetections.getBroccoliQuantityDetections());
+            stocks.setPeaShootQuantity(stocks.getPeaShootQuantity()-currentStockDetections.getPeaShootQuantityDetections());
+            stocks.setSunflowerQuantity(stocks.getSunflowerQuantity()-currentStockDetections.getSunflowerQuantityDetections());
+            stocks.setRedCabbageQuantity(stocks.getRedCabbageQuantity()-currentStockDetections.getRedCabbageQuantityDetections());
             stockDataRepository.save(stocks);
         }catch (Exception e){
             e.printStackTrace();

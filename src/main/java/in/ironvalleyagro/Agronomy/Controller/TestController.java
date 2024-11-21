@@ -33,25 +33,13 @@ public class TestController {
 
 
 
-    @GetMapping("/restore")
+    @GetMapping("/stockTest")
     public Response testLink() throws MessagingException {
-        Response res = new Response();
-        mailSenderService.sendWelcomeEmail("k9994728@gmail.com","Karthick B");
 
-
-//        StockData stockData = new StockData();
-//        stockData.setItemId("0");
-//        stockData.setBasilQuantity(9000);
-//        stockData.setKaleQuantity(9000);
-//        stockData.setLettuceQuantity(9000);
-//        stockData.setBabySpinachQuantity(9000);
-//        stockData.setPakChoiQuantity(9000);
-//        stockData.setArgulaQuantity(9000);
-//        stockDataRepository.save(stockData);
-
-
-
-        return res;
+        StockData stockData = new StockData("0",9000,9000,9000,9000,9000,9000,9000,9000,9000 ,9000,9000,9000,9000,9000,9000);
+        stockData.setItemId("0");
+        stockDataRepository.save(stockData);
+        return new Response();
     }
 
 

@@ -25,7 +25,7 @@ public class SecurityConfig {
                                 ,"/updatePorterId/{id}/{porterId}","/updateOrderStatus/{id}/{status}",
                                 "/deleteAddress/{id}","/restore","/sendOtp/{mail}","/verifyOtp/{mail}/{otp}",
                                 "/changeMobileNumber/{mail}/{newNumber}",
-                                "/getLastOrderDetails/{id}"
+                                "/getLastOrderDetails/{id}","/stockTest"
                                         ).permitAll() // Allow access to /public without authentication
                         .anyRequest().authenticated() // All endpoints require authentication
                 )
