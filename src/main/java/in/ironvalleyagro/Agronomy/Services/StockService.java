@@ -30,6 +30,15 @@ public class StockService {
             newStockData.setBasilQuantity(stockData.getBasilQuantity());
             newStockData.setPakChoiQuantity(stockData.getPakChoiQuantity());
             newStockData.setArgulaQuantity(stockData.getArgulaQuantity());
+            newStockData.setBeetRootQuantity(stockData.getBeetRootQuantity());
+            newStockData.setBroccoliQuantity(stockData.getBroccoliQuantity());
+            newStockData.setMustardQuantity(stockData.getMustardQuantity());
+            newStockData.setPeaShootQuantity(stockData.getPeaShootQuantity());
+            newStockData.setRadishPinkQuantity(stockData.getRadishPinkQuantity());
+            newStockData.setRadishPurpleQuantity(stockData.getRadishPurpleQuantity());
+            newStockData.setRadishWhiteQuantity(stockData.getRadishWhiteQuantity());
+            newStockData.setRedCabbageQuantity(stockData.getRedCabbageQuantity());
+            newStockData.setSunflowerQuantity(stockData.getSunflowerQuantity());
             stockDataRepository.save(newStockData);
             res.setFlag(true);
             res.setStatusCode(ResponseCode.CODE_SUCCESS);

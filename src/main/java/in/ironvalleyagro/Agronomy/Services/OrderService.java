@@ -101,11 +101,10 @@ public class OrderService {
             order.setPorterTrackerId("0");
             order.setAmountPaid(orderDto.getAmountPaid());
             Order newOrder = orderRepository.save(order);
-            if(newOrder.getOrderId()!=0) {
-                mailSenderService.sentOrderMail(newOrder);
-            }
+//            if(newOrder.getOrderId()!=0) {
+//                mailSenderService.sentOrderMail(newOrder);
+//            }
            res.setStatusCode(ResponseCode.CODE_SUCCESS);
-
             res.setData(newOrder);
         }catch (Exception e){
             e.printStackTrace();
