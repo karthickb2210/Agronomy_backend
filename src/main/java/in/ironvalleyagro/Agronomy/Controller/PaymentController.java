@@ -3,6 +3,7 @@ package in.ironvalleyagro.Agronomy.Controller;
 import com.razorpay.Order;
 import com.razorpay.RazorpayClient;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,9 +17,13 @@ public class PaymentController {
 
     private final RazorpayClient razorpayClient;
 
-    public PaymentController() throws Exception {
-        this.razorpayClient = new RazorpayClient("rzp_test_VIg1NaXkrCS4Lx", "WK4szpsjvFbz8lPgVzCe0a7d");
+    public PaymentController(
+            @Value("${razor.key}") String razorKey,
+            @Value("${razor.secret}") String razorSecret
+    ) throws Exception {
+        this.razorpayClient = new RazorpayClient(razorKey, razorSecret);
     }
+
 
     @PostMapping("/create-order")
     public String createOrder(@RequestBody Map<String, Object> data) throws Exception {
