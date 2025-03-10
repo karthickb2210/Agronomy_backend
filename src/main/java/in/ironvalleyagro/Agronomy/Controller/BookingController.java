@@ -18,7 +18,7 @@ public class BookingController {
     public void SendMail(@RequestBody MailDetails mailDetails){
         String templates =
                 "Dear " + mailDetails.getName() +",\n\n"+
-                        "We are delighted to confirm your appointment for a visit to our farm. Below are the details of your scheduled visit:\n\n" +
+                        "We are delighted upon your appointment for a visit to our farm. You will be receiving an email on visit confirmation:\n\n" +
                         "Date: "+mailDetails.getDate() +"\n" +
                         "Time: "+mailDetails.getTime()+"\n" +
                         "Location: 2ndAvenueStreet, SaptagiriColony, \n WestJaferkhanpet, K. K. Nagar, \n Chennai, Tamil Nadu 600083\n\n" +
@@ -30,7 +30,7 @@ public class BookingController {
         System.out.println(templates);
         mailSenderService.sendEmail(mailDetails.getEmail(), "Appointment Confirmation for Your Farm Visit on "+mailDetails.getDate()+" at "+ mailDetails.getTime() ,templates
         );
-    mailSenderService.sendEmail("ironvalleysolutionsllp@gmail.com","Received Appointment on "+mailDetails.getDate()+" at "+mailDetails.getTime()," " +
+    mailSenderService.sendEmail("sales@ivsourcing.com","Received Appointment on "+mailDetails.getDate()+" at "+mailDetails.getTime()," " +
             " We have received a booking appointment from "+mailDetails.getName()+" .To visit Us on "+ mailDetails.getDate()+" at "+mailDetails.getTime()+" \n\n"+" The message from them is -- "+mailDetails.getMessage()
     );
     }
